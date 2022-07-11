@@ -12,7 +12,7 @@ def temperature_in_range(temperature, language):
   if temperature < 0 or temperature > 45:
     if language == "EN":
       EN_print_statements('Temperature is out of range!')
-    elif language == "DE":
+    if language == "DE":
       DE_print_statements('Temperature is out of range!')
     return False
   return True
@@ -23,7 +23,7 @@ def soc_in_range(soc, language):
   if soc < 20 or soc > 80:
     if language == "EN":
       EN_print_statements('State of Charge is out of range!')
-    elif language == "DE":
+    if language == "DE":
       DE_print_statements('State of Charge is out of range!')
     return False
   return True
@@ -34,7 +34,7 @@ def charge_rate_in_range(charge_rate, language):
   if charge_rate > 0.8:
     if language == "EN":
       EN_print_statements('Charge rate is out of range!')
-    elif language == "DE":
+    if language == "DE":
       DE_print_statements('Charge rate is out of range!')
     return False
   return True
@@ -45,33 +45,33 @@ def check_warning(min_value, max_value, value, language):
   if value >= min_value + threshold:
     if language == "EN":
       EN_print_statements('Warning: Approaching discharge')
-  elif value <= max_value - threshold:
-    if language == "EN":
-      EN_print_statements('Warning: Approaching charge-peak')
+  if value <= max_value - threshold:
+    if language == "DE":
+      DE_print_statements('Warning: Approaching charge-peak')
 
 
 def EN_print_statements(sentence):
   if sentence == "Temperature is out of range!":
     print("Temperature is out of range!")
-  elif sentence == "State of Charge is out of range!":
+  if sentence == "State of Charge is out of range!":
     print("State of Charge is out of range!")
-  elif sentence == "Charge rate is out of range!":
+  if sentence == "Charge rate is out of range!":
     print("Charge rate is out of range!")
-  elif sentence == "Warning: Approaching discharge":
+  if sentence == "Warning: Approaching discharge":
     print("Warning: Approaching discharge")
-  elif sentence == "Warning: Approaching charge-peak":
+  if sentence == "Warning: Approaching charge-peak":
     print("Warning: Approaching charge-peak")
 
 def DE_print_statements(sentence):
   if sentence == "Temperature is out of range!":
     print("Die Temperatur liegt außerhalb des zulässigen Bereichs!")
-  elif sentence == "State of Charge is out of range!":
+  if sentence == "State of Charge is out of range!":
     print("Ladezustand außerhalb des Bereichs!")
-  elif sentence == "Charge rate is out of range!":
+  if sentence == "Charge rate is out of range!":
     print("Der Ladestrom liegt außerhalb des zulässigen Bereichs!")
-  elif sentence == "Warning: Approaching discharge":
+  if sentence == "Warning: Approaching discharge":
     print("Warnung: Naht Entladung")
-  elif sentence == "Warning: Approaching charge-peak":
+  if sentence == "Warning: Approaching charge-peak":
     print("Warnung: Ladespitze nähert sich")
 
 if __name__ == '__main__':
