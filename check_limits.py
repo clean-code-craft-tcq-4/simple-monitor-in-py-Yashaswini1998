@@ -1,78 +1,80 @@
-
-def battery_is_ok(temperature, soc, charge_rate, language):     
-  status_list = [temperature_in_range(temperature, language), soc_in_range(soc, language), charge_rate_in_range(charge_rate, language)]
+def battery_is_ok(temperature, soc, charge_rate, language): 
+  if language == "EN":    
+    status_list = [temperature_in_range_EN(temperature), soc_in_range_EN(soc), charge_rate_in_range_EN(charge_rate)]
+  if language == "DE":    
+    status_list = [temperature_in_range_DE(temperature), soc_in_range_DE(soc), charge_rate_in_range_DE(charge_rate)]
   for statuses in status_list:
     if statuses == False:
       return False
   return True
 
 
-def temperature_in_range(temperature, language):
-  check_warning(0, 45, temperature, language)
+def temperature_in_range_EN(temperature):
+  check_warning_EN(0, 45, temperature)
   if temperature < 0 or temperature > 45:
-    if language == "EN":
-      EN_print_statements('Temperature is out of range!')
-    if language == "DE":
-      DE_print_statements('Temperature is out of range!')
+    print_statements('Temperature is out of range!')
     return False
   return True
 
 
-def soc_in_range(soc, language):
-  check_warning(20, 80, soc, language)
+def temperature_in_range_DE(temperature):
+  check_warning_DE(0, 45, temperature)
+  if temperature < 0 or temperature > 45:
+    print_statements('Die Temperatur liegt außerhalb des zulässigen Bereichs!')
+    return False
+  return True
+
+def soc_in_range_EN(soc):
+  check_warning_EN(20, 80, soc)
   if soc < 20 or soc > 80:
-    if language == "EN":
-      EN_print_statements('State of Charge is out of range!')
-    if language == "DE":
-      DE_print_statements('State of Charge is out of range!')
+    print_statements('State of Charge is out of range!')
     return False
   return True
 
 
-def charge_rate_in_range(charge_rate, language):
-  check_warning(0, 0.8, charge_rate, language)
+def soc_in_range_DE(soc):
+  check_warning_DE(20, 80, soc)
+  if soc < 20 or soc > 80:
+    print_statements('Ladezustand außerhalb des Bereichs!')
+    return False
+  return True
+
+
+def charge_rate_in_range_EN(charge_rate):
+  check_warning_EN(0, 0.8, charge_rate)
   if charge_rate > 0.8:
-    if language == "EN":
-      EN_print_statements('Charge rate is out of range!')
-    if language == "DE":
-      DE_print_statements('Charge rate is out of range!')
+    print_statements('Charge rate is out of range!')
     return False
   return True
 
 
-def check_warning(min_value, max_value, value, language):
+def charge_rate_in_range_DE(charge_rate):
+  check_warning_DE(0, 0.8, charge_rate)
+  if charge_rate > 0.8:
+    print_statements('Der Ladestrom liegt außerhalb des zulässigen Bereichs!')
+    return False
+  return True
+
+
+def check_warning_EN(min_value, max_value, value):
   threshold = 0.5 * max_value
   if value >= min_value + threshold:
-    if language == "EN":
-      EN_print_statements('Warning: Approaching discharge')
+    print_statements('Warning: Approaching discharge')
   if value <= max_value - threshold:
-    if language == "DE":
-      DE_print_statements('Warning: Approaching charge-peak')
+    print_statements('Warning: Approaching charge-peak')
 
 
-def EN_print_statements(sentence):
-  if sentence == "Temperature is out of range!":
-    print("Temperature is out of range!")
-  if sentence == "State of Charge is out of range!":
-    print("State of Charge is out of range!")
-  if sentence == "Charge rate is out of range!":
-    print("Charge rate is out of range!")
-  if sentence == "Warning: Approaching discharge":
-    print("Warning: Approaching discharge")
-  if sentence == "Warning: Approaching charge-peak":
-    print("Warning: Approaching charge-peak")
+def check_warning_DE(min_value, max_value, value):
+  threshold = 0.5 * max_value
+  if value >= min_value + threshold:
+    print_statements('Warnung: Naht Entladung')
+  if value <= max_value - threshold:
+    print_statements('Warnung: Ladespitze nähert sich')
 
-def DE_print_statements(sentence):
-  if sentence == "Temperature is out of range!":
-    print("Die Temperatur liegt außerhalb des zulässigen Bereichs!")
-  if sentence == "State of Charge is out of range!":
-    print("Ladezustand außerhalb des Bereichs!")
-  if sentence == "Charge rate is out of range!":
-    print("Der Ladestrom liegt außerhalb des zulässigen Bereichs!")
-  if sentence == "Warning: Approaching discharge":
-    print("Warnung: Naht Entladung")
-  if sentence == "Warning: Approaching charge-peak":
-    print("Warnung: Ladespitze nähert sich")
+
+def print_statements(message):
+  print(message)
+
 
 if __name__ == '__main__':
   assert(battery_is_ok(25, 70, 0.7, "EN") is True)
@@ -85,5 +87,5 @@ if __name__ == '__main__':
   assert(battery_is_ok(30, 80, 0, "EN") is True)
   assert(battery_is_ok(30, 10, 0, "EN") is False)
   assert(battery_is_ok(30, 90, 0, "EN") is False)
-  assert(battery_is_ok(30, 50, 0.8, "EN") is True)
-  assert(battery_is_ok(30, 50, 0.9, "EN") is False)
+  assert(battery_is_ok(30, 50, 0.8, "DE") is True)
+  assert(battery_is_ok(30, 50, 0.9, "DE") is False)
