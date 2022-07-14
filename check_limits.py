@@ -1,8 +1,13 @@
-def battery_is_ok(temperature, soc, charge_rate, language): 
-  if language == "EN":    
-    status_list = [temperature_in_range_EN(temperature), soc_in_range_EN(soc), charge_rate_in_range_EN(charge_rate)]
-  if language == "DE":    
-    status_list = [temperature_in_range_DE(temperature), soc_in_range_DE(soc), charge_rate_in_range_DE(charge_rate)]
+def battery_is_ok_EN(temperature, soc, charge_rate):     
+  status_list = [temperature_in_range_EN(temperature), soc_in_range_EN(soc), charge_rate_in_range_EN(charge_rate)]
+  for statuses in status_list:
+    if statuses == False:
+      return False
+  return True
+
+
+def battery_is_ok_DE(temperature, soc, charge_rate):         
+  status_list = [temperature_in_range_DE(temperature), soc_in_range_DE(soc), charge_rate_in_range_DE(charge_rate)]
   for statuses in status_list:
     if statuses == False:
       return False
@@ -77,15 +82,15 @@ def print_statements(message):
 
 
 if __name__ == '__main__':
-  assert(battery_is_ok(25, 70, 0.7, "EN") is True)
-  assert(battery_is_ok(50, 85, 0, "EN") is False)
-  assert(battery_is_ok(-1, 79, 0, "EN") is False)
-  assert(battery_is_ok(0, 75, 0, "EN") is True)
-  assert(battery_is_ok(45, 75, 0, "EN") is True)
-  assert(battery_is_ok(46, 75, 0, "EN") is False)
-  assert(battery_is_ok(30, 20, 0, "EN") is True)
-  assert(battery_is_ok(30, 80, 0, "EN") is True)
-  assert(battery_is_ok(30, 10, 0, "EN") is False)
-  assert(battery_is_ok(30, 90, 0, "EN") is False)
-  assert(battery_is_ok(30, 50, 0.8, "DE") is True)
-  assert(battery_is_ok(30, 50, 0.9, "DE") is False)
+  assert(battery_is_ok_EN(25, 70, 0.7) is True)
+  assert(battery_is_ok_EN(50, 85, 0) is False)
+  assert(battery_is_ok_EN(-1, 79, 0) is False)
+  assert(battery_is_ok_EN(0, 75, 0) is True)
+  assert(battery_is_ok_EN(45, 75, 0) is True)
+  assert(battery_is_ok_EN(46, 75, 0) is False)
+  assert(battery_is_ok_EN(30, 20, 0) is True)
+  assert(battery_is_ok_EN(30, 80, 0) is True)
+  assert(battery_is_ok_EN(30, 10, 0) is False)
+  assert(battery_is_ok_EN(30, 90, 0) is False)
+  assert(battery_is_ok_DE(30, 50, 0.8) is True)
+  assert(battery_is_ok_DE(30, 50, 0.9) is False)
